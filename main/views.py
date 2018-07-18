@@ -1,6 +1,8 @@
 from django.shortcuts import render
-from django.http import HttpResponse
 
-
+context = {'like': 'Django 真棒！'}
 def main(request):
-    return HttpResponse('Hello World!!')
+    return render(request, 'main/main.html', context)
+
+def about(request):
+    return render(request, 'main/about.html')
