@@ -13,7 +13,7 @@ def populate():
         article = Article()
         article.title = title
         for j in range(20):
-            article.content = title + '\n'
+            article.content += title + '\n'
         article.save()
         for comment in comments:
             Comment.objects.create(article=article, content=comment)
