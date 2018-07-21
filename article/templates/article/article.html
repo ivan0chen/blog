@@ -10,11 +10,18 @@
 <body>
     {% include 'main/menu.html' %}
     <h2>歡迎來到我的部落格</h2>
-    <br>
+    {% include 'main/messages.html' %}
+    {% include 'article/searchForm.html' %}
+    <p class="inlineBlock"><a class="btn" href="{% url 'article:articleCreate' %}">新增文章</a></p>
+    <br><br><br>
     {% for items in itemList %}
         {% for item in items %}
             {% if forloop.first %}
-                <h3>{{ item.title }}</h3>
+                <h3 class="inlineBlock"><a href="{% url 'article:articleRead' item.id %}">{{ item.title }}</a></h3>
+                <form class="inlineBlock" method="post" action="{% url 'article:articleDelete' item.id %}">
+                    {% csrf_token %}
+                    <input class="btn deleteConfirm" type="submit" value="刪除">
+                </form>
                 <p>發表時間：{{ item.pubDateTime|date:'Y-m-d H:i' }}</p>
                 <div class="articleContent">{{ item.content|linebreaks|truncatechars_html:30 }}</div>
             {% else %}
@@ -27,5 +34,7 @@
         {% endfor %}
         <hr>
     {% endfor %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="{% static 'main/js/deleteConfirm.js' %}"></script>
 </body>
 </html>

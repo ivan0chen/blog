@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'main/css/main.css' %}">
+    <link rel="stylesheet" href="{% static 'article/css/article.css' %}"
+    <title>部落格</title>
+</head>
+<body>
+    {% include 'main/menu.html' %}
+    <h1>歡迎來到我的部落格</h1>
+    {% include 'article/searchForm.html' %}
+    <br><br><hr>
+    {% if not articles %}
+        <p>查無資料</p>
+    {% else %}
+        <table class="table table-striped table-hover">
+            <tr><th>標題</th><th>發表時間</th></tr>
+            {% for article in articles %}
+                <tr>
+                    <td><a href="{% url 'article:articleRead' article.id %}">{{ article.title }}</a></td>
+                    <td>{{ article.pubDateTime|date:'Y-m-d H:i' }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+</body>
+</html>
