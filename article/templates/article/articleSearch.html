@@ -1,15 +1,9 @@
-<!DOCTYPE html>
-{% load staticfiles %}
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="{% static 'main/css/main.css' %}">
+{% extends 'main/base.html' %}
+{% block css %}
     <link rel="stylesheet" href="{% static 'article/css/article.css' %}"
-    <title>部落格</title>
-</head>
-<body>
-    {% include 'main/menu.html' %}
-    <h1>歡迎來到我的部落格</h1>
+{% endblock %}
+{% block heading %}搜尋{% endblock %}
+{% block content %}
     {% include 'article/searchForm.html' %}
     <br><br><hr>
     {% if not articles %}
@@ -25,5 +19,4 @@
             {% endfor %}
         </table>
     {% endif %}
-</body>
-</html>
+{% endblock %}
