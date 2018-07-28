@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="Django default" uuid="3a7ee445-6be0-48c5-b9c7-81057a8979f4">
+    <data-source source="LOCAL" name="blogDB" uuid="3a7ee445-6be0-48c5-b9c7-81057a8979f4">
       <driver-ref>mysql</driver-ref>
       <synchronize>true</synchronize>
       <imported>true</imported>
@@ -15,6 +15,22 @@
         <property name="characterEncoding" value="utf8" />
         <property name="characterSetResults" value="utf8" />
         <property name="yearIsDateType" value="false" />
+      </driver-properties>
+    </data-source>
+    <data-source source="LOCAL" name="Django default" uuid="a7d2cdeb-ff5b-4099-bc35-51f4a218a555">
+      <driver-ref>mysql</driver-ref>
+      <synchronize>true</synchronize>
+      <imported>true</imported>
+      <remarks>$PROJECT_DIR$/blog/settings.py</remarks>
+      <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://127.0.0.1:3306/blogDB</jdbc-url>
+      <driver-properties>
+        <property name="autoReconnect" value="true" />
+        <property name="yearIsDateType" value="false" />
+        <property name="characterEncoding" value="utf8" />
+        <property name="zeroDateTimeBehavior" value="convertToNull" />
+        <property name="characterSetResults" value="utf8" />
+        <property name="tinyInt1isBit" value="false" />
       </driver-properties>
     </data-source>
   </component>

@@ -8,11 +8,43 @@
     <a class="btn inlineBlock" href="{% url 'article:articleUpdate' article.id %}">修改</a>
     <p>發表時間：{{ article.pubDateTime|date:'Y-m-d H:i' }}</p>
     <div class="articleContent">{{ article.content|linebreaks }}</div>
+    <p class="like">
+        <img id="like" src="{% static 'main/img/like.png' %}" alt="like">{{ article.likes.count }}
+        {% if user.is_authenticated %}
+            <a href="{% url 'article:articleLike' article.id %}">讚</a>
+        {% endif %}
+    </p>
+
     {% for comment in comments %}
         <div class="commentDiv">
-            <span class="comment">{{ comment.content }}</span>
+            <span class="commentAuthor">{{ comment.user.fullname }}</span>
+            {% if comment.user != user %}
+                <span class="comment">{{ comment.content }}</span>
+            {% else %}
+                <form class="inlineBlock" method="post" action="{% url 'article:commentUpdate' comment.id %}">
+                    {% csrf_token %}
+                    <input type="text" name="comment" value="{{ comment.content }}">
+                    <input class="btn" type="submit" value="修改">
+                </form>
+                <form class="inlineBlock" method="post" action="{% url 'article:commentDelete' comment.id %}">
+                    {% csrf_token %}
+                    <input class="btn deleteConfirm" type="submit" value="刪除">
+                </form>
+            {% endif %}
             <br>
             <span class="commentTime">{{ comment.pubDateTime|date:'Y-m-d H:i' }}</span>
         </div>
     {% endfor %}
+    {% if user.is_authenticated %}
+        <br>
+        <form method="post" action="{% url 'article:commentCreate' article.id %}">
+            {% csrf_token %}
+            <input type="text" name="comment" placeholder="留言 ... ">
+            <input class="btn" type="submit" value="送出">
+        </form>
+        <br><br>
+    {% endif %}
+{% endblock %}
+{% block script %}
+    <script src="{% static 'main/js/deleteConfirm.js' %}"></script>
 {% endblock %}

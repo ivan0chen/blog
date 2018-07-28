@@ -6,7 +6,7 @@ def populate():
     User.objects.exclude(is_superuser=True).delete()
     for i in range(5):
         username = 'user' + str(i)
-        User.objects.create_user(username=username, password=username, email=None)
+        User.objects.create_user(username=username, password=username, email=None, fullname=username)
     print('done')
 
 if __name__ == '__main__':
