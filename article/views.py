@@ -3,6 +3,8 @@ from article.models import Article,Comment
 from article.forms import ArticleForm
 from django.contrib import messages
 from django.db.models.query_utils import Q
+from django.contrib.auth.decorators import login_required
+from main.views import admin_required
 
 def article(request):
     articles = Article.objects.all()
@@ -14,6 +16,7 @@ def article(request):
     context = {'itemList': itemList}
     return render(request, 'article/article.html', context)
 
+@admin_required
 def articleCreate(request):
     template = 'article/articleCreateUpdate.html'
     if request.method == 'GET':
@@ -34,6 +37,7 @@ def articleRead(request,articleId):
     }
     return render(request, 'article/articleRead.html', context)
 
+@admin_required
 def articleUpdate(request, articleId):
     article = get_object_or_404(Article, id=articleId)
     template = 'article/articleCreateUpdate.html'
@@ -48,6 +52,7 @@ def articleUpdate(request, articleId):
     messages.success(request, '文章已修改')
     return redirect('article:articleRead',articleId=articleId)
 
+@admin_required
 def articleDelete(request, articleId):
     if request.method == 'GET':
         return article(request)
@@ -64,12 +69,14 @@ def articleSearch(request):
     context = {'articles': articles, 'searchTerm': searchTerm}
     return render(request, 'article/articleSearch.html', context)
 
+@login_required
 def articleLike(request, articleId):
     article = get_object_or_404(Article, id=articleId)
     if request.user not in article.likes.all():
         article.likes.add(request.user)
     return articleRead(request, articleId)
 
+@login_required
 def commentCreate(request, articleId):
     if request.method == 'GET':
         return articleRead(request, articleId)
@@ -84,6 +91,7 @@ def commentCreate(request, articleId):
     Comment.objects.create(article=article, user=request.user, content=comment)
     return redirect('article:articleRead',articleId=articleId)
 
+@login_required
 def commentUpdate(request, commentId):
     if request.method == 'GET':
         comment = get_object_or_404(Comment, id=commentId)
@@ -104,6 +112,7 @@ def commentUpdate(request, commentId):
         commentToUpdate.save()
     return redirect('article:articleRead', articleId=article.id)
 
+@login_required
 def commentDelete(request, commentId):
     if request.method == 'GET':
         comment = get_object_or_404(Comment, id=commentId)

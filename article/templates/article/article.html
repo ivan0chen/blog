@@ -5,16 +5,20 @@
 {% block heading %}歡迎蒞臨{% endblock %}
 {% block content %}
     {% include 'article/searchForm.html' %}
-    <p class="inlineBlock"><a class="btn" href="{% url 'article:articleCreate' %}">新增文章</a></p>
+    {% if user.is_superuser %}
+        <p class="inlineBlock"><a class="btn" href="{% url 'article:articleCreate' %}">新增文章</a></p>
+    {% endif %}
     <br><br><br>
     {% for items in itemList %}
         {% for item in items %}
             {% if forloop.first %}
                 <h3 class="inlineBlock"><a href="{% url 'article:articleRead' item.id %}">{{ item.title }}</a></h3>
-                <form class="inlineBlock" method="post" action="{% url 'article:articleDelete' item.id %}">
-                    {% csrf_token %}
-                    <input class="btn deleteConfirm" type="submit" value="刪除">
-                </form>
+                {% if user.is_superuser %}
+                    <form class="inlineBlock" method="post" action="{% url 'article:articleDelete' item.id %}">
+                        {% csrf_token %}
+                        <input class="btn deleteConfirm" type="submit" value="刪除">
+                    </form>
+                {% endif %}
                 <p>發表時間：{{ item.pubDateTime|date:'Y-m-d H:i' }}</p>
                 <div class="articleContent">{{ item.content|linebreaks|truncatechars_html:30 }}</div>
                 <p class="like">
