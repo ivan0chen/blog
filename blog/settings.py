@@ -98,6 +98,41 @@ else:       # Running on Heroku
     DATABASES = {'default':dj_database_url.config()}
     # Honor the 'X-Forwarded-Proto' header for request.is_secure()
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+    import os
+    import sys
+    import urlparse
+
+    # Register database schemes in URLs.
+    urlparse.uses_netloc.append('mysql')
+
+    try:
+
+        # Check to make sure DATABASES is set in settings.py file.
+        # If not default to {}
+
+        if 'DATABASES' not in locals():
+            DATABASES = {}
+
+        if 'DATABASE_URL' in os.environ:
+            url = urlparse.urlparse(os.environ['DATABASE_URL'])
+
+            # Ensure default database exists.
+            DATABASES['default'] = DATABASES.get('default', {})
+
+            # Update with environment configuration.
+            DATABASES['default'].update({
+                'NAME': url.path[1:],
+                'USER': url.username,
+                'PASSWORD': url.password,
+                'HOST': url.hostname,
+                'PORT': url.port,
+            })
+
+            if url.scheme == 'mysql':
+                DATABASES['default']['ENGINE'] = 'django.db.backends.mysql'
+    except Exception:
+        print
+        'Unexpected error:', sys.exc_info()
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
@@ -140,8 +175,6 @@ STATIC_URL = '/static/'
 AUTH_USER_MODEL = 'account.User'
 
 LOGIN_URL = '/account/login/'
-
-CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
 # For Heroku deployment
 STATIC_ROOT = 'staticfiles'
