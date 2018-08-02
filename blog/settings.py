@@ -93,11 +93,6 @@ if DEBUG:       # Running on the development environment
         }
     }
 else:       # Running on Heroku
-    # Parse database configuration from $DATABASE_URL
-    import dj_database_url
-    DATABASES = {'default':dj_database_url.config()}
-    # Honor the 'X-Forwarded-Proto' header for request.is_secure()
-    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
     import os
     import sys
     import urlparse
@@ -131,8 +126,7 @@ else:       # Running on Heroku
             if url.scheme == 'mysql':
                 DATABASES['default']['ENGINE'] = 'django.db.backends.mysql'
     except Exception:
-        print
-        'Unexpected error:', sys.exc_info()
+        print('Unexpected error:', sys.exc_info())
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
