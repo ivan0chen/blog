@@ -19,7 +19,7 @@
         <form method="post" action="{% url 'article:articleCreate' %}">
     {% endif %}
             {% csrf_token %}
-            {{ articleForm|crispy }}
+            {{ articleForm }}
             <input class="btn" type="submit" value="送出">
             <a class="btn" href="{% url 'article:article' %}">放棄</a>
         </form>
