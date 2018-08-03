@@ -95,10 +95,10 @@ if DEBUG:       # Running on the development environment
 else:       # Running on Heroku
     import os
     import sys
-    from urllib.parse import urlparse
+    from urllib.parse import urlparse, uses_netloc
 
     # Register database schemes in URLs.
-    urlparse.uses_netloc.append('mysql')
+    uses_netloc.append('mysql')
 
     try:
 
@@ -109,7 +109,7 @@ else:       # Running on Heroku
             DATABASES = {}
 
         if 'DATABASE_URL' in os.environ:
-            url = urlparse.urlparse(os.environ['DATABASE_URL'])
+            url = urlparse(os.environ['DATABASE_URL'])
 
             # Ensure default database exists.
             DATABASES['default'] = DATABASES.get('default', {})
