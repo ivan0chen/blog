@@ -95,7 +95,7 @@ if DEBUG:       # Running on the development environment
 else:       # Running on Heroku
     import os
     import sys
-    import urlparse
+    from urllib.parse import urlparse
 
     # Register database schemes in URLs.
     urlparse.uses_netloc.append('mysql')
