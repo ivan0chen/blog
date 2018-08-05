@@ -80,7 +80,8 @@ WSGI_APPLICATION = 'blog.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
-if DEBUG:       # Running on the development environment
+#if DEBUG:       # Running on the development environment
+if 'DYNO' not in os.environ:  # Running on Heroku
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
