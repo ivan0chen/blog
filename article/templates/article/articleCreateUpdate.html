@@ -1,5 +1,4 @@
 {% extends 'main/base.html' %}
-{% load crispy_forms_tags %}
 {% block css %}
     <link rel="stylesheet" href="{% static 'article/css/article.css' %}">
 {% endblock %}
@@ -19,7 +18,7 @@
         <form method="post" action="{% url 'article:articleCreate' %}">
     {% endif %}
             {% csrf_token %}
-            {{ articleForm }}
+            {{ articleForm.as_p }}
             <input class="btn" type="submit" value="送出">
             <a class="btn" href="{% url 'article:article' %}">放棄</a>
         </form>
