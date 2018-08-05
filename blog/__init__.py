@@ -1,3 +1,5 @@
-import pymysql
+import os
 
-pymysql.install_as_MySQLdb()
+if 'DYNO' in os.environ:
+    import pymysql
+    pymysql.install_as_MySQLdb()
