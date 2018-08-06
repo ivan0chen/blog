@@ -15,14 +15,6 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
-TEMPLATE_DIRS = (
-    os.path.join(BASE_DIR,  'templates'),
-    # Add to this list all the locations containing your static files
-)
-
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
@@ -32,7 +24,7 @@ SECRET_KEY = 'hzw+c1gu*k$7d0qg+s-i$(!yj@eudcm7+%#fmm_6j+5h$9)^p9'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 if 'DYNO' in os.environ:        # Running on Heroku
-    DEBUG = True
+    DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -152,4 +144,4 @@ LOGIN_URL = '/account/login/'
 
 # For Heroku deployment
 
-#STATIC_ROOT = 'staticfiles'
+STATIC_ROOT = 'staticfiles'

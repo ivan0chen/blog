@@ -17,7 +17,6 @@ application = get_wsgi_application()
 
 from blog.settings import DEBUG
 if not DEBUG:    # Running on Heroku
-    #from dj_static import Cling
-    #application = Cling(get_wsgi_application())
-    from whitenoise.django import DjangoWhiteNoise
-    application = DjangoWhiteNoise(application)
+    from dj_static import Cling
+    application = Cling(get_wsgi_application())
+
